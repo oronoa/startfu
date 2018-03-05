@@ -20,9 +20,8 @@ h1 { line-height: 1; color: #222; margin-bottom: 24px; text-align: top; }
 h1 { font-size: 34px; }
 
 article p, article blockquote, article ul, article ol, article small { margin-bottom: 24px; }
-	article ol li { margin-left: 24px; padding-bottom: 12px; }
-	article ul li { margin-left: 24px; padding-bottom: 12px; }
-
+article ol li { margin-left: 24px; padding-bottom: 12px; }
+article ul li { margin-left: 24px; padding-bottom: 12px; }
 
 a { }
 	article a { color: #B72402; font-weight: 400; transition: ease all .4s; text-decoration: none; border-bottom: 1px solid #004781; }
