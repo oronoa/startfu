@@ -346,12 +346,33 @@
 	var clickMe = {}; // Object for public APIs
 	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
 	var settings; // Placeholder variables
-    
+	
+	
+	function findAncestor (el, tag) {
+		while ((el = el.parentElement) && !el.tagName == tag);
+		console.log('found :::', el.parentElement);
+		return el.parentElement;
+	}
+
+
+	function processForm(e) {
+		if (e.preventDefault) e.preventDefault();
+		console.log('processing', e);
+		/* do what you want with the form */
+		//e.target.submit();
+		// You must return false to prevent the default form behavior
+		return false;
+	}
+
 	// Default settings
 	var defaults = {
 		resizeLog: 'The window was resized!',
-		callbackBefore: function () {},
-		callbackAfter: function () {}
+		callbackBefore: function () {
+			console.log('before');
+		},
+		callbackAfter: function () {
+			console.log('after');
+		}
 	};
 
 
@@ -391,8 +412,8 @@
 	var eventHandler = function (event) {
 
 		// Callback before the event handler runs
-		settings.callbackBefore;
-
+		settings.callbackBefore();
+		console.log('key : ' , settings.API_KEY);
 		// On click
 		if ( event.type === 'click' ) {
 			addClass( event );
@@ -404,7 +425,7 @@
 		}
 
 		// Callback after the event handler runs
-		settings.callbackAfter;
+		settings.callbackAfter();
 
 	};
 
@@ -444,6 +465,20 @@
 
 		// Destroy any existing initializations
 		clickMe.destroy();
+
+		var inputs = document.querySelectorAll( 'input[type=email]' );
+		for ( var i = 0, len = inputs.length; i < len; i++  ) {
+			console.log('gggg',inputs[i]);
+			var form = findAncestor(inputs[i]);
+			console.log(form);
+			if (form.attachEvent) {
+				console.log('attaching');
+				form.attachEvent("submit", processForm);
+			} else {
+				console.log('attaching evcent');
+				form.addEventListener("submit", processForm);
+			}
+		}
 
 		// Merge user options with defaults
 		settings = buoy.extend( defaults, options || {} );
